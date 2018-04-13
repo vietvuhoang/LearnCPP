@@ -28,6 +28,11 @@ Array::Array( const int* arr, unsigned int size ): size(size) {
 
 }
 
+Array::~Array() {
+    if ( this->buffer == NULL ) return;
+    delete this->buffer;
+}
+
 const Array& Array::operator=( const Array& arr) {
 
     if ( arr.getBuffer() == NULL || arr.getSize() == 0 ) {
@@ -46,11 +51,6 @@ const Array& Array::operator=( const Array& arr) {
     this->size = arr.getSize();
 
     return *this;
-}
-
-Array::~Array() {
-    if ( this->buffer == NULL ) return;
-    delete this->buffer;
 }
 
 const int* Array::getBuffer() const {
