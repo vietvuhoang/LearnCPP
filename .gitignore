@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# Folder
+*/bin
+*/lib
+*/obj
+
+# IDE
+*/.vscode
