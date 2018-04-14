@@ -33,11 +33,11 @@ int main(int argc, const char *argv[])
 
 		printArray(array, "array");
 
-		Array array2;
+		Array* array2 = new Array();
 
-		array2 = array;
+		*array2 = array;
 
-		printArray(array2, "array2");
+		printArray(*array2, "array2");
 
 		cout << array[100] << endl;
 	}
