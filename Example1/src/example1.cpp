@@ -41,7 +41,7 @@ int main(int argc, const char *argv[])
 
 		cout << array[100] << endl;
 	}
-	catch (exception &ex)
+	catch (const exception &ex)
 	{
 		cerr << "ERROR : " << ex.what() << endl;
 	}

@@ -1,0 +1,47 @@
+#!/bin/sh
+
+CURDIR=`pwd`
+BUILDDIR='buildDir'
+BINDIR='bin'
+
+removeFolder() {
+    if [ -d "$1" ]; then
+        echo "Remove folder $1"
+        rm -rf $1
+    fi
+}
+
+if [ "$1" = 'clean' ]; then
+    echo "Cleanup..."
+    removeFolder $BUILDDIR
+    removeFolder $BINDIR
+    exit 0
+fi
+
+if [ ! -d "$BUILDDIR" ]; then
+  echo "Create folder $BUILDDIR"
+  mkdir $BUILDDIR
+fi
+
+if [ ! -d "$BINDIR" ]; then
+  echo "Create folder $BINDIR"
+  mkdir $BINDIR
+fi
+
+cd $BUILDDIR
+
+cmake ..
+
+if [ $? -ne 0 ]; then
+    cd $CURDIR
+    exit 1    
+fi
+
+make
+
+if [ $? -ne 0 ]; then
+    cd $CURDIR
+    exit 1    
+fi
+
+cd $CURDIR

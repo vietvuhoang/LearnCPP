@@ -35,6 +35,10 @@
 */bin
 */lib
 */obj
+*/buildDir
 
 # IDE
+.vscode
 */.vscode
+*.code-workspace
+
