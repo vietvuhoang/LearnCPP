@@ -1,43 +1,10 @@
 #define BUFF_SIZE 10
 #include <iostream>
 #include <stdexcept>
+#include "piece.hpp"
+#include "imove.hpp"
 
 using namespace std;
-
-class Piece {
-
-protected: 
-
-    char file;
-    unsigned short rank;
-
-public: 
-
-    Piece( char file, unsigned short rank) : file( file), rank(rank) {
-    }
-
-    virtual void move() {
-        cout << "Piece Move" << endl;
-    }
-
-    ~Piece() {
-        cout << "Piece dead" << endl;
-    }
-};
-
-class Knight : public Piece {
-public:
-    Knight( char file, unsigned short rank) : Piece( file, rank ) {
-    }
-
-    void move() {
-        cout << "Knight Move" << endl;
-    }
-
-    ~Knight() {
-        cout << "Knight dead" << endl;
-    }
-};
 
 void example2_test_virtual_method() {
     cout << "example2_test_virtual_method" << endl;
@@ -45,6 +12,7 @@ void example2_test_virtual_method() {
     Knight knight('A', 1);
 
     knight.move();
+
 }
 
 void example2_test_virtual_destructor() {
@@ -57,13 +25,27 @@ void example2_test_virtual_destructor() {
     delete piece;
 }
 
+void example2_check_interface() {
+
+    cout << "example2_check_interface" << endl;
+
+    IMove* move = createMover();
+
+    move->move();
+    
+}
+
 int main(int argc, const char *argv[])
 {
 
 	try
 	{
         example2_test_virtual_method();
+        cout << endl;
         example2_test_virtual_destructor();		
+        cout << endl;
+        example2_check_interface();
+        cout << endl;
 	}
 	catch (const exception &ex)
 	{
