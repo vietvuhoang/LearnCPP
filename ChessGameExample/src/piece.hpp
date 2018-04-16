@@ -24,7 +24,7 @@ class Piece
     const Position &getPosition() const;
     const ChessSet &getParty() const;
 
-    virtual std::list<Position> collectAvailablePositions() const = 0;
+    virtual void collectAvailablePositions( std::list<Position>& positionList ) const = 0;
     virtual std::string getName() const = 0;
 
     void set( const Position& newPos );

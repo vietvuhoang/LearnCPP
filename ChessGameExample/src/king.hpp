@@ -10,8 +10,8 @@ public:
     King(const Position &pos, ChessSet party);
     ~King();
 
-    std::list<Position> collectAvailablePositions();
-    std::string getName();
+    void collectAvailablePositions( std::list<Position>& positionList ) const;
+    std::string getName() const;
 
 };
 

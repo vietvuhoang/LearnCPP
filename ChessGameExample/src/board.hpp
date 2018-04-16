@@ -14,7 +14,6 @@ class Board
     std::shared_ptr<Piece> mainBoard[BOARD_COL * BOARD_ROW];
 
     void verifyNewPos( std::shared_ptr<const Piece>, const Position &des ) const;
-    std::shared_ptr<Piece>& getPiece(const Position &pos);
 
   public:
     Board();

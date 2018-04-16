@@ -1,10 +1,20 @@
 #ifndef _POSITION_HPP_
+#define _POSITION_HPP_
 #include <sstream>
 #include <stdexcept>
 #include <iostream>
+#include "appexception.hpp"
 
-#define VALIDATE_CRANK(rank) { if ( rank < 1 || rank > 8 ) throw std::invalid_argument("Invalid Rank");}
-#define VALIDATE_CFILE(rank) { if ( file < 'A' || file > 'H') throw std::invalid_argument("Invalid File");}
+#define VALIDATE_CRANK(rank)                             \
+    {                                                    \
+        if (rank < 1 || rank > 8)                        \
+            throw std::invalid_argument("Invalid Rank"); \
+    }
+#define VALIDATE_CFILE(rank)                             \
+    {                                                    \
+        if (file < 'A' || file > 'H')                    \
+            throw std::invalid_argument("Invalid File"); \
+    }
 
 enum CFile
 {
@@ -42,26 +52,27 @@ class Position
     {
     }
 
-    Position(const CFile &file, unsigned char rank) 
+    Position(const CFile &file, unsigned char rank)
     {
-        this->set( file, rank );
+        this->set(file, rank);
     }
 
-    Position(unsigned char file, const CRank &rank) 
+    Position(unsigned char file, const CRank &rank)
     {
-        this->set( file, rank );
+        this->set(file, rank);
     }
 
-    Position(unsigned char file, unsigned char rank) 
+    Position(unsigned char file, unsigned char rank)
     {
-        this->set( file, rank );
+        this->set(file, rank);
     }
 
     Position(const Position &pos) : rank(pos.rank), file(pos.file)
     {
     }
 
-    ~Position() {
+    ~Position()
+    {
     }
 
     const Position &operator=(const Position &pos)
@@ -71,7 +82,8 @@ class Position
         return *this;
     }
 
-    bool operator==(const Position& pos ) const {
+    bool operator==(const Position &pos) const
+    {
         return this->rank == pos.getRank() && this->file == pos.getFile();
     }
 
@@ -85,34 +97,34 @@ class Position
         return file;
     }
 
-    std::string toString() const 
+    std::string toString() const
     {
         std::ostringstream stringStream;
         stringStream << (char)file << rank;
         return stringStream.str();
     }
 
-    void set( const CFile& file, const CRank& rank)
+    void set(const CFile &file, const CRank &rank)
     {
         this->rank = rank;
         this->file = file;
     }
 
-    void set(const CFile& file, unsigned char rank)
+    void set(const CFile &file, unsigned char rank)
     {
         VALIDATE_CRANK(rank);
         this->rank = CRank(rank);
         this->file = file;
     }
 
-    void set( unsigned char file, const CRank &rank)
+    void set(unsigned char file, const CRank &rank)
     {
-        VALIDATE_CFILE(file);        
+        VALIDATE_CFILE(file);
         this->rank = rank;
         this->file = CFile(file);
     }
 
-    void set( unsigned char file, unsigned char rank)
+    void set(unsigned char file, unsigned char rank)
     {
         VALIDATE_CRANK(rank);
         VALIDATE_CFILE(file);
@@ -121,18 +133,31 @@ class Position
     }
 };
 
+class InvalidMovingStepException : public AppException
+{
+
+  public:
+    InvalidMovingStepException() : AppException("Invalid Moving Step")
+    {
+    }
+
+    virtual ~InvalidMovingStepException() throw()
+    {
+    }
+};
+
 inline CRank add(CRank rank, unsigned int step)
 {
     unsigned int num = rank + step;
     if (num > 8)
-        throw std::invalid_argument("Invalid moving steps");
+        throw InvalidMovingStepException();
     return CRank(num);
 }
 
 inline CRank minus(CRank rank, unsigned int step)
 {
     if (rank <= step)
-        throw std::invalid_argument("Invalid moving steps");
+        throw InvalidMovingStepException();
     return CRank(rank - step);
 }
 
@@ -140,14 +165,14 @@ inline CFile add(CFile file, unsigned int step)
 {
     unsigned int c = file + step;
     if (c > 'H')
-        throw std::invalid_argument("Invalid moving steps");
+        throw InvalidMovingStepException();
     return CFile(c);
 }
 
 inline CFile minus(CFile file, unsigned int step)
 {
     if (step > 8 || file - step < 'A')
-        throw std::invalid_argument("Invalid moving steps");
+        throw InvalidMovingStepException();
     return CFile(file - step);
 }
 
