@@ -1,9 +1,22 @@
 #ifndef _POSITION_HPP_
 #include <sstream>
 #include <stdexcept>
+#include <iostream>
 
 #define VALIDATE_CRANK(rank) { if ( rank < 1 || rank > 8 ) throw std::invalid_argument("Invalid Rank");}
 #define VALIDATE_CFILE(rank) { if ( file < 'A' || file > 'H') throw std::invalid_argument("Invalid File");}
+
+enum CFile
+{
+    A = 'A',
+    B = 'B',
+    C = 'C',
+    D = 'D',
+    E = 'E',
+    F = 'F',
+    G = 'G',
+    H = 'H'
+};
 
 enum CRank
 {
@@ -15,17 +28,6 @@ enum CRank
     R6 = 6,
     R7 = 7,
     R8 = 8
-};
-enum CFile
-{
-    A = 'A',
-    B = 'B',
-    C = 'C',
-    D = 'D',
-    E = 'E',
-    F = 'F',
-    G = 'G',
-    H = 'H'
 };
 
 class Position
@@ -59,11 +61,18 @@ class Position
     {
     }
 
+    ~Position() {
+    }
+
     const Position &operator=(const Position &pos)
     {
         this->rank = pos.rank;
         this->file = pos.file;
         return *this;
+    }
+
+    bool operator==(const Position& pos ) const {
+        return this->rank == pos.getRank() && this->file == pos.getFile();
     }
 
     const CRank &getRank() const
@@ -76,7 +85,7 @@ class Position
         return file;
     }
 
-    std::string toString()
+    std::string toString() const 
     {
         std::ostringstream stringStream;
         stringStream << (char)file << rank;

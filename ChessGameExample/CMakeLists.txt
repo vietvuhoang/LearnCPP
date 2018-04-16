@@ -8,6 +8,6 @@ add_custom_target( bin_folder ALL
     COMMAND test -e ${FolderToCheck} || mkdir ${FolderToCheck}
     COMMENT "Checking if ${FolderToCheck} exists...")
 
-add_executable(${FolderToCheck}/chessgame src/chessgame.cpp )
+add_executable(${FolderToCheck}/chessgame src/chessgame.cpp src/piece.cpp src/board.cpp )
 
 target_link_libraries (${FolderToCheck}/chessgame)
